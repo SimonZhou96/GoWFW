@@ -17,6 +17,13 @@ type Context struct {
 
 	StatusCode int
 	StatusMessage string
+
+	Params map[string]string
+}
+
+func (c *Context) Param(key string) string {
+	value, _ := c.Params[key]
+	return value
 }
 
 func NewContext(writer http.ResponseWriter, request *http.Request) *Context {

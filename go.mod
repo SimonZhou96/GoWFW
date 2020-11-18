@@ -1,7 +1,12 @@
 module GoWFW
 
-go 1.14
+go 1.13
 
-require gee v0.0.0
 
-replace gee => ./gee
+require (
+	gee v0.0.0
+)
+
+replace (
+	gee => ./gee
+)

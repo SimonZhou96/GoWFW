@@ -19,6 +19,9 @@ type Context struct {
 	StatusMessage string
 
 	Params map[string]string
+	// middleware
+	handlers []HandlerFunc
+	index int
 }
 
 func (c *Context) Param(key string) string {
@@ -32,6 +35,15 @@ func NewContext(writer http.ResponseWriter, request *http.Request) *Context {
 		Request:       request,
 		Path:          request.URL.Path,
 		Method:        request.Method,
+		index: -1,
+	}
+}
+
+func (c *Context) Next() {
+	c.index++
+	s := len(c.handlers)
+	for ; c.index < s; c.index++ {
+		c.handlers[c.index](c)
 	}
 }
 
